@@ -1,0 +1,261 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DistortionCard from '../components/DistortionCard.astro';
+
+// Master Architectural Data Array: The 5 Core Cognitive Defects
+const logicalDistortions = [
+  {
+    numericId: "01",
+    label: "Causal Linear Collapse",
+    symptom: "Missing link between Mechanism Engine and the Verifiable Unit of Measure.",
+    remedy: "Rigidly lock the single-sentence Master Research Question syntax down."
+  },
+  {
+    numericId: "02",
+    label: "Soft Narrative Inflation",
+    symptom: "Substituting concrete system parameters with historical or passive descriptions.",
+    remedy: "Flush out background descriptions; inject a distinct mathematical or functional ticker."
+  },
+  {
+    numericId: "03",
+    label: "Perimeter Context Leaks",
+    symptom: "Failing to establish the strict geographic or environmental boundaries of the framework.",
+    remedy: "Enclose data tracking models strictly within a locked Location Parameter."
+  },
+  {
+    numericId: "04",
+    label: "Unverified Mechanism Insertion",
+    symptom: "Introducing an active strategy or intervention without defining its execution rules.",
+    remedy: "Map out the precise, high-altitude functional process as the Active Engine."
+  },
+  {
+    numericId: "05",
+    label: "Summary Accumulation Error",
+    symptom: "Treating massive, descriptive row data collections as objective empirical proof.",
+    remedy: "Isolate the exact countable target pattern that isolates success variables instantly."
+  }
+];
+---
+
+<Layout title="THE LOGIC PIPELINE | Systemic Argument Architecture">
+  <main class="pipeline-main">
+    <!-- Hero Block -->
+    <header class="hero-section container">
+      <div class="brand-monogram">
+        <svg 
+          xmlns="http://w3.org" 
+          viewBox="0 0 24 24" 
+          style="display: block; width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 1.5; margin: 0 auto;"
+        >
+          <path d="M6 3h12M6 21h12M6 3l6 9 6-9M6 21l6-9 6 9" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <h1>THE LOGIC PIPELINE</h1>
+      <p class="tagline">Surgical logic tracking for advanced research proposals and thesis defense frameworks.</p>
+      
+      
+        <span class="badge">Enterprise IT Architecture (IBM Certified Senior EA)</span>
+        <span class="badge">Academic Governance (PhD Research Matrix)</span>
+      
+    </header>
+
+    <!-- Structural Assembly Paradigm: The Hourglass -->
+    <section class="hourglass-section container">
+      <h2>The Structural Matrix Blueprint</h2>
+      <div class="matrix-grid">
+        <div class="matrix-node">
+          <h3>1. High-Altitude Scope</h3>
+          <p>Analyzing expansive literature domains to pinpoint the unaddressed knowledge deficit.</p>
+        </div>
+        <div class="matrix-node active-core">
+          <h3>2. The Locked Sentence Core</h3>
+          <p>The single-sentence Master Research Question containing Engine, Location, and Unit variables.</p>
+        </div>
+        <div class="matrix-node">
+          <h3>3. Granular Proof Arrays</h3>
+          <p>Compiling technical validation logs, structural citations, and verified academic parameters.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Distortion Registry Subsystem -->
+    <section class="registry-section container">
+      <div class="section-meta">
+        <h2>Argument Distortion Registry</h2>
+        <p class="section-desc">The five foundational structural design defects that trigger immediate faculty review board rejection.</p>
+      </div>
+
+      <div class="distortion-cluster">
+        {logicalDistortions.map((distortion) => (
+          <DistortionCard 
+            id={distortion.numericId}
+            title={distortion.label}
+            symptom={distortion.symptom}
+            remedy={distortion.remedy}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Global Interface Navigation Gateways -->
+    <footer class="pipeline-gateways container">
+      <div class="gate-card">
+        <h3>Academic Text References</h3>
+        <p>Access postgrad verification documents, examiner evaluations, and peer-reviewed technical proofs.</p>
+        <a href="/references" class="gate-link">Enter Document Vault →</a>
+      </div>
+      
+      <div class="gate-card highlighted-gate">
+        <h3>Intake Screening Portal</h3>
+        <p>Secure an execution window inside our highly selective October 4-Student Boardroom Capsules.</p>
+        <a href="/register" class="gate-link action-btn">Submit Parameters Gate →</a>
+      </div>
+    </footer>
+
+    <div class="legal-attribution container">
+      <p>© 2026 Dr. John Ernst Oosthuizen. All rights engineered.</p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .pipeline-main {
+    padding: 4rem 0;
+  }
+  .hero-section {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+  .brand-monogram {
+    display: block;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    
+    /* Injects your rich asset green directly into the layout */
+    color: #127C44; 
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .brand-monogram {
+      /* Maintains excellent high-contrast readability against dark backgrounds */
+      color: #38b06c; 
+    }
+  }
+
+  .tagline {
+    font-size: var(--step-1);
+    color: var(--text-muted);
+    max-width: 55ch;
+    margin: 1rem auto 2.5rem auto;
+  }
+  .identity-badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+  }
+  .hourglass-section {
+    margin-bottom: 6rem;
+  }
+  .hourglass-section h2, .registry-section h2 {
+    border-left: 2px solid var(--text-primary);
+    padding-left: 1rem;
+    margin-bottom: 3rem;
+  }
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .matrix-node {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-accent);
+    padding: 2rem;
+    border-radius: 4px;
+  }
+  .active-core {
+    border: 1px dashed var(--text-primary);
+    background: transparent;
+  }
+  .registry-section {
+    margin-bottom: 6rem;
+  }
+  .section-meta {
+    margin-bottom: 3rem;
+  }
+  .section-desc {
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    max-width: 65ch;
+  }
+  .distortion-cluster {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .pipeline-gateways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-accent);
+    padding-top: 4rem;
+  }
+  .gate-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-accent);
+    padding: 2.5rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .highlighted-gate {
+    border-color: var(--text-primary);
+  }
+  .gate-card h3 {
+    margin-bottom: 1rem;
+  }
+  .gate-card p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: var(--step-0);
+  }
+  .gate-link {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: var(--step-0);
+  }
+  .action-btn {
+    display: block;
+    text-align: center;
+    border: 1px solid var(--text-primary);
+    padding: 0.75rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  .action-btn:hover {
+    background: var(--action-hover);
+    color: var(--action-text-hover);
+  }
+  .legal-attribution {
+    text-align: center;
+    margin-top: 6rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+</style>

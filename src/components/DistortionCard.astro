@@ -1,0 +1,123 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  symptom: string;
+  remedy: string;
+}
+
+const { id, title, symptom, remedy } = Astro.props;
+---
+
+<article class="distortion-card">
+  
+    <span class="defect-index">{id}</span>
+  
+  
+  <div class="card-content-col">
+    <h3 class="defect-title">{title}</h3>
+    
+    <div class="diagnostic-matrix">
+      <div class="matrix-row">
+        <span class="matrix-label">Systemic Symptom:</span>
+        <p class="matrix-value text-symptom">{symptom}</p>
+      </div>
+      
+      <div class="matrix-row">
+        <span class="matrix-label">Surgical Remedy:</span>
+        <p class="matrix-value text-remedy">{remedy}</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .distortion-card {
+    display: flex;
+    gap: 2rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-accent);
+    padding: 2rem;
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+  }
+
+  .distortion-card:hover {
+    border-color: var(--text-muted);
+  }
+
+  .card-identity-col {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .defect-index {
+    font-family: var(--font-sans);
+    font-size: var(--step-2);
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0.4;
+    line-height: 1;
+  }
+
+  .card-content-col {
+    flex: 1;
+  }
+
+  .defect-title {
+    margin: 0 0 1.5rem 0;
+    font-size: var(--step-1);
+    color: var(--text-primary);
+  }
+
+  .diagnostic-matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .matrix-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1rem;
+    align-items: top;
+  }
+
+  .matrix-label {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    padding-top: 0.15rem;
+  }
+
+  .matrix-value {
+    margin: 0;
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+
+  .text-symptom {
+    color: var(--text-primary);
+  }
+
+  .text-remedy {
+    color: var(--text-muted);
+  }
+
+  /* Responsive Adaptive Breakpoint Overrides */
+  @media (max-width: 640px) {
+    .distortion-card {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+    
+    .matrix-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>
