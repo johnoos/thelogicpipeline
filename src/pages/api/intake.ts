@@ -54,5 +54,5 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (err: any) {
     console.error("Serverless route exception:", err);
     return new Response(JSON.stringify({ error: "Internal transmission line delay." }), { status: 500 });
-  }
+  } 
 };
