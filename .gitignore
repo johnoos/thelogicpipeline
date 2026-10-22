@@ -2,3 +2,4 @@ node_modules/
 .astro/
 dist/
 resend.com-api-key.env
+.wrangler
