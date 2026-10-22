@@ -1,12 +1,14 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   srcDir: './src',
   publicDir: './public',
   outDir: './dist',
+  
+  // Explicitly tell Astro to compile into Cloudflare Serverless Edge Functions
+  output: 'server', 
 
   // Set your primary deployment subdomain engine path
   site: 'https://johnoosthuizen.com',
