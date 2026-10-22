@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import DistortionCard from '../components/DistortionCard.astro';
 
-// Master Architectural Data Array: The 5 Core Cognitive Defects
 const logicalDistortions = [
   {
     numericId: "01",
@@ -37,32 +36,30 @@ const logicalDistortions = [
 ];
 ---
 
-<Layout title="THE LOGIC PIPELINE | Systemic Argument Architecture">
+<Layout title="THE LOGIC PIPELINE | Postgraduate Logic Diagnostics">
   <main class="pipeline-main">
-    <!-- Hero Block -->
+
     <header class="hero-section container">
       <div class="brand-monogram">
-        <svg 
-          xmlns="http://w3.org" 
-          viewBox="0 0 24 24" 
-          style="display: block; width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 1.5; margin: 0 auto;"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          style="display:block;width:64px;height:64px;fill:none;stroke:currentColor;stroke-width:1.5;margin:0 auto;"
         >
           <path d="M6 3h12M6 21h12M6 3l6 9 6-9M6 21l6-9 6 9" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
+
       <h1>THE LOGIC PIPELINE</h1>
       <p class="tagline">Surgical logic tracking for advanced research proposals and thesis defense frameworks.</p>
-      
-      
-       <!-- Primary Focus: Placed first to declare your core service immediately -->
-        <span class="badge">Postgraduate Logic Diagnostics</span>
-        
-        <!-- Competitive Edge: Framed as the architectural engineering foundation behind your coaching -->
-        <span class="badge">Rigour Derived from Enterprise IT Architecture (IBM Senior EA)</span>
 
+      <div class="badge-row">
+        <span class="badge">Postgraduate Logic Diagnostics</span>
+        <span class="badge">Rigour Derived from Enterprise IT Architecture (IBM Senior EA)</span>
+      </div>
     </header>
 
-   <!-- Structural Assembly Paradigm: The Hourglass -->
     <section class="hourglass-section container">
       <h2>The 'Hourglass' Argument Construction</h2>
       <div class="matrix-grid">
@@ -75,13 +72,12 @@ const logicalDistortions = [
           <p>Surgically isolating, categorising, and extracting underlying logic defects from the body paragraphs before they mask the core line.</p>
         </div>
         <div class="matrix-node">
-          <h3>3. Symmetrical Resolution</h3> <!-- Clean, unified title -->
+          <h3>3. Symmetrical Resolution</h3>
           <p>Formulating the precise analytical counterweight at the base of the thesis that perfectly satisfies and balances the initial macro knowledge gap.</p>
         </div>
       </div>
     </section>
 
-    <!-- Distortion Registry Subsystem -->
     <section class="registry-section container">
       <div class="section-meta">
         <h2>Argument Distortion Registry</h2>
@@ -90,7 +86,7 @@ const logicalDistortions = [
 
       <div class="distortion-cluster">
         {logicalDistortions.map((distortion) => (
-          <DistortionCard 
+          <DistortionCard
             id={distortion.numericId}
             title={distortion.label}
             symptom={distortion.symptom}
@@ -100,11 +96,9 @@ const logicalDistortions = [
       </div>
     </section>
 
-   <!-- The Weekly Group Clinic Operational Block -->
     <section class="clinic-section container">
       <h2>The Weekly Group Clinic</h2>
-      
-      <!-- Operational Design Integration -->
+
       <div class="inverted-classroom-callout">
         <h3>'Inverted Classroom' Optimal Live Clinic Design</h3>
         <p>
@@ -126,166 +120,59 @@ const logicalDistortions = [
       </div>
     </section>
 
-    <!-- Global Interface Navigation Gateways (Footer) -->
-    <footer class="pipeline-gateways container">
+    <section class="coaching-section container">
+      <h2>Remediation Framework Parameters</h2>
+      <div class="table-responsive">
+        <table class="pricing-table" aria-label="Comparison of group and 1-on-1 formats">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Online Group Format</th>
+              <th>Online 1-on-1 Consulting</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Target Enrolment</strong></td>
+              <td>4-student maximum cohort per clinic.</td>
+              <td>Single candidate exclusive track.</td>
+            </tr>
+            <tr>
+              <td><strong>Duration &amp; Pace</strong></td>
+              <td>4 weeks, synchronized operational cycles.</td>
+              <td>Customized timeline, accelerated or long-form triage.</td>
+            </tr>
+            <tr>
+              <td><strong>Structure</strong></td>
+              <td>Weekly text freezing with 12-minute candidate hot-seat surgeries.</td>
+              <td>Customized. Deep-dive end-to-end logical architecture extraction.</td>
+            </tr>
+            <tr>
+              <td><strong>Strategic Ideal</strong></td>
+              <td>Candidates requiring rigorous peer logic defense simulation.</td>
+              <td>Postgraduates facing imminent submission deadlines or examiner rewrites.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pipeline-gateways container">
       <div class="gate-card">
         <h3>Academic Text References</h3>
         <p>Access postgrad verification documents, examiner evaluations, and publications.</p>
         <a href="/references" class="gate-link">Enter Document Vault →</a>
       </div>
-      
+
       <div class="gate-card highlighted-gate">
         <h3>Intake Screening Portal</h3>
-        <p>Secure an execution window inside our highly selective October 4-Student Boardroom Capsules.</p>
-        <!-- Updated anchor tag path text string -->
-        <a href="/register" class="gate-link action-btn">Submit Enrolment or Query →</a>
+        <p>Secure an execution window inside our highly selective October/November 4-Student Research Cohorts.</p>
+        <a href="/register" class="gate-link action-btn">Submit Intake Parameter Check or Query →</a>
       </div>
-    </footer>
+    </section>
 
-    <div class="legal-attribution container">
+    <footer class="legal-attribution container">
       <p>© 2026 Dr. John Ernst Oosthuizen. All rights engineered.</p>
-    </div>
+    </footer>
   </main>
 </Layout>
-
-<style>
-  .pipeline-main {
-    padding: 4rem 0;
-  }
-  .hero-section {
-    text-align: center;
-    margin-bottom: 6rem;
-  }
-  .brand-monogram {
-    display: block;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    
-    /* Injects your rich asset green directly into the layout */
-    color: #127C44; 
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .brand-monogram {
-      /* Maintains excellent high-contrast readability against dark backgrounds */
-      color: #38b06c; 
-    }
-  }
-
-  .tagline {
-    font-size: var(--step-1);
-    color: var(--text-muted);
-    max-width: 55ch;
-    margin: 1rem auto 2.5rem auto;
-  }
-  .identity-badge-row {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .badge {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.5rem 1rem;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-accent);
-    border-radius: 4px;
-  }
-  .hourglass-section {
-    margin-bottom: 6rem;
-  }
-  .hourglass-section h2, .registry-section h2 {
-    border-left: 2px solid var(--text-primary);
-    padding-left: 1rem;
-    margin-bottom: 3rem;
-  }
-  .matrix-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-  .matrix-node {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-accent);
-    padding: 2rem;
-    border-radius: 4px;
-  }
-  .active-core {
-    border: 1px dashed var(--text-primary);
-    background: transparent;
-  }
-  .registry-section {
-    margin-bottom: 6rem;
-  }
-  .section-meta {
-    margin-bottom: 3rem;
-  }
-  .section-desc {
-    color: var(--text-muted);
-    font-size: var(--step-1);
-    max-width: 65ch;
-  }
-  .distortion-cluster {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .pipeline-gateways {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2rem;
-    margin-top: 4rem;
-    border-top: 1px solid var(--border-accent);
-    padding-top: 4rem;
-  }
-  .gate-card {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-accent);
-    padding: 2.5rem;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .highlighted-gate {
-    border-color: var(--text-primary);
-  }
-  .gate-card h3 {
-    margin-bottom: 1rem;
-  }
-  .gate-card p {
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-    font-size: var(--step-0);
-  }
-  .gate-link {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: var(--step-0);
-  }
-  .action-btn {
-    display: block;
-    text-align: center;
-    border: 1px solid var(--text-primary);
-    padding: 0.75rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-  }
-  .action-btn:hover {
-    background: var(--action-hover);
-    color: var(--action-text-hover);
-  }
-  .legal-attribution {
-    text-align: center;
-    margin-top: 6rem;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
-</style>

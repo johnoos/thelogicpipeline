@@ -18,16 +18,36 @@ const registrationOpen = true;
           <h2>Submit Intake Parameter Check or Query</h2>
           
           <p class="form-instruction-text">
-            To secure a boardroom seat or log an exploratory technical query, please use the transmission gate below to launch your pre-formatted parameters allocation draft:
+            Please enter your baseline tracking information below to securely deliver your structural parameters directly to our archive:
           </p>
           
-          <!-- Replace 'YOUR_EMAIL@ADDRESS.COM' with your active email box -->
-          <button 
-            onclick="window.location.href='mailto:YOUR_EMAIL@://address.com Application or Query: October-November Cohort&body=THE LOGIC PIPELINE INTAKE AND QUERY PARAMETERS%0D%0A================================================%0D%0AFull Name: [ Insert Name ]%0D%0AAcademic/Corporate Email: [ Insert Email ]%0D%0A%0D%0AParameter Summary or Query Context:%0D%0A[ Insert your current research phase, block, or raw query details here ]%0D%0A';"
-            class="submit-action-link"
-          >
-            Submit →
-          </button>
+          <!-- Unified Data Submission Layout -->
+          <form id="pipeline-intake-form">
+            <!-- Invisible security honeypot field to trap automated malicious scripts -->
+            <input type="text" name="security-token" style="display:none !important;" tabindex="-1" autocomplete="off" />
+
+            <div class="form-group">
+              <label for="student-name">Full Name</label>
+              <input type="text" id="student-name" name="student-name" required placeholder="John Smith" class="input-field" />
+            </div>
+            
+            <div class="form-group">
+              <label for="student-email">Academic/Corporate Email Address</label>
+              <input type="email" id="student-email" name="student-email" required placeholder="name@university.edu" class="input-field" />
+            </div>
+
+            <div class="form-group">
+              <label for="student-query">Parameter Summary or Query Context</label>
+              <textarea id="student-query" name="student-query" rows="4" required placeholder="Insert your current research phase, block, or raw query details here..." class="input-field"></textarea>
+            </div>
+            
+            <button type="submit" id="submit-btn" class="submit-action-link">
+              Submit Parameters →
+            </button>
+          </form>
+
+          <!-- Dynamic, Premium Inline Feedback Containers -->
+          <div id="status-notice" class="ui-notice-box" style="display: none;"></div>
         </div>
       ) : (
         <div class="alert-box">
@@ -37,6 +57,53 @@ const registrationOpen = true;
     </section>
   </main>
 </Layout>
+
+<script>
+  const form = document.getElementById('pipeline-intake-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const noticeBox = document.getElementById('status-notice') as HTMLDivElement;
+
+  if (form && submitBtn && noticeBox) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // 1. Trigger premium processing state visual indicator
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Transmitting Parameters...";
+      noticeBox.style.display = 'none';
+
+      try {
+        const formData = new FormData(form);
+        
+        // 2. Dispatch data package securely straight into your private serverless endpoint
+        const response = await fetch('/api/intake', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          // 3. Absolute Success State UI Switch
+          form.style.display = 'none';
+          noticeBox.className = "ui-notice-box success-state";
+          noticeBox.innerHTML = `<h3>Transmission Successful ✓</h3><p>Your research parameters have been secured inside our private database zone. Dr Oosthuizen will review your diagnostic profile and contact you within 24 operational hours.</p>`;
+          noticeBox.style.display = 'block';
+        } else {
+          throw new Error(result.error || "Server connection delay.");
+        }
+
+      } catch (err: any) {
+        // 4. Elegant Failure Fallback Protection
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Parameters →";
+        noticeBox.className = "ui-notice-box error-state";
+        noticeBox.innerHTML = `<h3>System Transmission Delay</h3><p>Our secure server is currently processing high cohort volumes. To bypass this routing delay immediately, please dispatch your text manually to <strong>john@johnoosthuizen.com</strong>.</p>`;
+        noticeBox.style.display = 'block';
+      }
+    });
+  }
+</script>
 
 <style>
   .py-xl { padding-top: 4rem; padding-bottom: 4rem; }
@@ -49,6 +116,12 @@ const registrationOpen = true;
   .form-wrapper h2 { font-size: var(--step-2); margin-top: 0; margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
   .form-instruction-text { font-size: var(--step-0); color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6; }
   
+  .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group label { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; }
+  .input-field { width: 100%; padding: 0.75rem; background: var(--bg-canvas); border: 1px solid var(--border-accent); color: var(--text-primary); border-radius: 4px; font-family: inherit; font-size: var(--step-0); box-sizing: border-box; }
+  .input-field:focus { border-color: var(--brand-accent); outline: none; }
+  textarea.input-field { resize: vertical; }
+
   .submit-action-link {
     display: block;
     width: 100%;
@@ -65,11 +138,24 @@ const registrationOpen = true;
     transition: all 0.2s ease;
     outline: none;
     -webkit-appearance: none;
+    margin-top: 2rem;
   }
-  .submit-action-link:hover {
+  .submit-action-link:hover:not(:disabled) {
     background: var(--action-hover);
     color: var(--action-text-hover);
     border-color: var(--action-hover);
   }
+  .submit-action-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Inline Premium Notification Box Layouts */
+  .ui-notice-box { padding: 1.5rem; border-radius: 4px; margin-top: 2rem; font-size: var(--step-0); line-height: 1.6; }
+  .success-state { background: rgba(18, 124, 68, 0.05); border: 1px solid #127C44; color: var(--text-primary); }
+  .success-state h3 { color: #127C44; margin-top: 0; margin-bottom: 0.5rem; font-size: var(--step-1); }
+  .error-state { background: rgba(217, 119, 6, 0.05); border: 1px solid #d97706; color: var(--text-primary); }
+  .error-state h3 { color: #d97706; margin-top: 0; margin-bottom: 0.5rem; font-size: var(--step-1); }
+  
   .alert-box { border-left: 3px solid var(--text-muted); padding-left: 1rem; color: var(--text-muted); }
 </style>
