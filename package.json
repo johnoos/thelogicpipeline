@@ -4,20 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-types": "wrangler types"
+    "generate-types": "wrangle types"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.2",
     "@astrojs/sitemap": "^3.7.4",
-    "@emnapi/core": "^1.11.3",
-    "@emnapi/runtime": "^1.11.3",
-    "astro": "^7.4.1",
-    "resend": "^6.34.1",
+    "@emnapi/core": "^1.1.13",
+    "@emnapi/runtime": "^1.1.13",
+    "astro": "^7.4.2",
+    "resend": "^6.3.4",
     "typescript": "^7.0.2",
     "wrangler": "^4.151.3"
   }
