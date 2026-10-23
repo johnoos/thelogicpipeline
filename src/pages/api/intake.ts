@@ -14,7 +14,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const resend = new Resend(apiKey);
 
-    // DYNAMIC PARSER: Safely reads the data whether the client sends it as JSON or Form parameters
     let name = '';
     let email = '';
     let query = '';
@@ -22,18 +21,46 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const contentType = request.headers.get('content-type') || '';
 
-    if (contentType.includes('application/json')) {
-      const body = await request.json() as any;
-      name = body['student-name']?.toString().trim() || '';
-      email = body['student-email']?.toString().trim() || '';
-      query = body['student-query']?.toString().trim() || '';
-      honeypot = body['security-token']?.toString() || '';
-    } else {
-      const data = await request.formData();
-      name = data.get('student-name')?.toString().trim() || '';
-      email = data.get('student-email')?.toString().trim() || '';
-      query = data.get('student-query')?.toString().trim() || '';
-      honeypot = data.get('security-token')?.toString() || '';
+    // INSULATED PARSER CYCLE: Manually processes text streams to bypass strict native URLDecoder crashes
+    try {
+      if (contentType.includes('application/json')) {
+        const body = await request.json() as any;
+        name = body['student-name']?.toString().trim() || '';
+        email = body['student-email']?.toString().trim() || '';
+        query = body['student-query']?.toString().trim() || '';
+        honeypot = body['security-token']?.toString() || '';
+      } else if (contentType.includes('application/x-www-form-urlencoded')) {
+        const rawBody = await request.text();
+        const pairs = rawBody.split('&');
+        const parsedData: Record<string, string> = {};
+
+        for (const pair of pairs) {
+          const [key, val] = pair.split('=');
+          if (key) {
+            try {
+              // Standard decode mapping
+              const cleanKey = decodeURIComponent(key);
+              const cleanVal = decodeURIComponent((val || '').replace(/\+/g, ' '));
+              parsedData[cleanKey] = cleanVal;
+            } catch {
+              // Safe fallback if raw symbols (like a lone '%') break the standard decoder
+              parsedData[key] = (val || '').replace(/\+/g, ' ');
+            }
+          }
+        }
+        name = parsedData['student-name'] || '';
+        email = parsedData['student-email'] || '';
+        query = parsedData['student-query'] || '';
+        honeypot = parsedData['security-token'] || '';
+      } else {
+        const data = await request.formData();
+        name = data.get('student-name')?.toString().trim() || '';
+        email = data.get('student-email')?.toString().trim() || '';
+        query = data.get('student-query')?.toString().trim() || '';
+        honeypot = data.get('security-token')?.toString() || '';
+      }
+    } catch (parseError) {
+      console.error("Request body pre-processing bypass activated:", parseError);
     }
     
     // LAYER GUARD: Anti-Spam Honeypot Detection
