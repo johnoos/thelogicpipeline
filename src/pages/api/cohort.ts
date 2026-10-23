@@ -14,7 +14,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!studentName || !studentEmail) {
       return new Response(
         JSON.stringify({ error: 'Missing Required Allocation Parameters.' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { 'Content-Type': 'application/json' } } 
       );
     }
 
