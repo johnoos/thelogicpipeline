@@ -5,7 +5,6 @@ import { Resend } from 'resend';
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    // Extract the API key safely from the Cloudflare environment runtime context
     const runtimeEnv = locals?.runtime?.env;
     const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
 
@@ -15,15 +14,29 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const resend = new Resend(apiKey);
 
-    const data = await request.formData();
-    
-    // Capture data objects precisely
-    const name = data.get('student-name')?.toString().trim();
-    const email = data.get('student-email')?.toString().trim();
-    const query = data.get('student-query')?.toString().trim();
+    // DYNAMIC PARSER: Safely reads the data whether the client sends it as JSON or Form parameters
+    let name = '';
+    let email = '';
+    let query = '';
+    let honeypot = '';
+
+    const contentType = request.headers.get('content-type') || '';
+
+    if (contentType.includes('application/json')) {
+      const body = await request.json() as any;
+      name = body['student-name']?.toString().trim() || '';
+      email = body['student-email']?.toString().trim() || '';
+      query = body['student-query']?.toString().trim() || '';
+      honeypot = body['security-token']?.toString() || '';
+    } else {
+      const data = await request.formData();
+      name = data.get('student-name')?.toString().trim() || '';
+      email = data.get('student-email')?.toString().trim() || '';
+      query = data.get('student-query')?.toString().trim() || '';
+      honeypot = data.get('security-token')?.toString() || '';
+    }
     
     // LAYER GUARD: Anti-Spam Honeypot Detection
-    const honeypot = data.get('security-token')?.toString();
     if (honeypot && honeypot.length > 0) {
       return new Response(JSON.stringify({ success: true, message: "Spam filtered." }), { status: 200 });
     }
@@ -60,6 +73,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   } catch (err: any) {
     console.error("Serverless route exception:", err);
-    return new Response(JSON.stringify({ error: "Internal transmission line delay." }), { status: 500 });
+    return new Response(JSON.stringify({ error: `Internal transmission delay: ${err.message}` }), { status: 500 });
   } 
 };
