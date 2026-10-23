@@ -29,5 +29,8 @@ export default defineConfig({
     })
   ],
 
-  adapter: cloudflare(),
+  // Configure the Cloudflare adapter to assemble structural routing files natively
+  adapter: cloudflare({
+    mode: 'directory'
+  }),
 });
