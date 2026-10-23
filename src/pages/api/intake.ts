@@ -3,29 +3,18 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-// Replace: const resend = new Resend(process.env.RESEND_API_KEY);
-// With this safe runtime checker:
-
-// const runtimeEnv = Astro.locals.runtime?.env;
-// const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
-
-// const resend = new Resend(apiKey);
-
-// Initialize the mail delivery controller using your secure environment token
-// const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
-// Replace the old process.env configuration with this runtime check
-const runtimeEnv = Astro.locals.runtime?.env;
-const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
-
-if (!apiKey) {
-  console.error("Missing RESEND_API_KEY in Cloudflare runtime environments.");
-}
-
-const resend = new Resend(apiKey);
-
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
+    // Extract the API key safely from the Cloudflare environment runtime context
+    const runtimeEnv = locals?.runtime?.env;
+    const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      console.error("Missing RESEND_API_KEY in Cloudflare runtime environments.");
+    }
+
+    const resend = new Resend(apiKey);
+
     const data = await request.formData();
     
     // Capture data objects precisely
@@ -47,8 +36,8 @@ export const POST: APIRoute = async ({ request }) => {
     // Secure Data Transmission Execution
     const { error } = await resend.emails.send({
       from: 'The Logic Pipeline Vault <onboarding@resend.dev>',
-      to: ['joosthuizen@gmail.com'], // Instantly routes parameters straight into your newly mapped Workspace alias
-      replyTo: email, // Instantly routes your manual replies straight back to the candidate
+      to: ['joosthuizen@gmail.com'], 
+      replyTo: email, 
       subject: `Intake Application or Query: October-November Cohort`,
       html: `
         <h2>THE LOGIC PIPELINE INTAKE AND QUERY PARAMETERS</h2>
