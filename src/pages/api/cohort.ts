@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData();
     const studentName = formData.get('name')?.toString().trim();
-    const studentEmail = formData.get('email')?.toString().trim();
+    const studentEmail = formData.get('email')?.toString().trim(); 
 
     // Data Presence Interrogation Rules
     if (!studentName || !studentEmail) {
