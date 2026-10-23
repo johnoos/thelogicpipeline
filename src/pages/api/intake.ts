@@ -46,8 +46,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Secure Data Transmission Execution
     const { error } = await resend.emails.send({
-      from: 'The Logic Pipeline Vault <vault@johnoosthuizen.com>',
-      to: ['vault@johnoosthuizen.com'], // Instantly routes parameters straight into your newly mapped Workspace alias
+      from: 'The Logic Pipeline Vault <onboarding@resend.dev>',
+      to: ['joosthuizen@gmail.com'], // Instantly routes parameters straight into your newly mapped Workspace alias
       replyTo: email, // Instantly routes your manual replies straight back to the candidate
       subject: `Intake Application or Query: October-November Cohort`,
       html: `
