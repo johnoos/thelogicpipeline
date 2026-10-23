@@ -6,13 +6,23 @@ import { Resend } from 'resend';
 // Replace: const resend = new Resend(process.env.RESEND_API_KEY);
 // With this safe runtime checker:
 
-const runtimeEnv = Astro.locals.runtime?.env;
-const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+// const runtimeEnv = Astro.locals.runtime?.env;
+// const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
 
-const resend = new Resend(apiKey);
+// const resend = new Resend(apiKey);
 
 // Initialize the mail delivery controller using your secure environment token
 // const resend = new Resend(import.meta.env.RESEND_API_KEY);
+
+// Replace the old process.env configuration with this runtime check
+const runtimeEnv = Astro.locals.runtime?.env;
+const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+
+if (!apiKey) {
+  console.error("Missing RESEND_API_KEY in Cloudflare runtime environments.");
+}
+
+const resend = new Resend(apiKey);
 
 export const POST: APIRoute = async ({ request }) => {
   try {
