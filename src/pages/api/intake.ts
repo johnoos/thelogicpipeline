@@ -2,14 +2,16 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
+// Natively imports the secure edge execution vault directly from the environment
+import { env } from 'cloudflare:workers'; 
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
-    const runtimeEnv = locals?.runtime?.env;
-    const apiKey = runtimeEnv?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+    // Read the secret key directly from the standard Cloudflare runtime bindings
+    const apiKey = env.RESEND_API_KEY;
 
     if (!apiKey) {
-      console.error("Missing RESEND_API_KEY in Cloudflare runtime environments.");
+      console.error("Missing RESEND_API_KEY in modern Cloudflare runtime environments.");
     }
 
     const resend = new Resend(apiKey);
@@ -21,7 +23,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const contentType = request.headers.get('content-type') || '';
 
-    // INSULATED PARSER CYCLE: Manually processes text streams to bypass strict native URLDecoder crashes
+    // Insulated stream parser
     try {
       if (contentType.includes('application/json')) {
         const body = await request.json() as any;
@@ -38,12 +40,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
           const [key, val] = pair.split('=');
           if (key) {
             try {
-              // Standard decode mapping
               const cleanKey = decodeURIComponent(key);
               const cleanVal = decodeURIComponent((val || '').replace(/\+/g, ' '));
               parsedData[cleanKey] = cleanVal;
             } catch {
-              // Safe fallback if raw symbols (like a lone '%') break the standard decoder
               parsedData[key] = (val || '').replace(/\+/g, ' ');
             }
           }
@@ -60,20 +60,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
         honeypot = data.get('security-token')?.toString() || '';
       }
     } catch (parseError) {
-      console.error("Request body pre-processing bypass activated:", parseError);
+      console.error("Request body processing bypass activated:", parseError);
     }
     
-    // LAYER GUARD: Anti-Spam Honeypot Detection
     if (honeypot && honeypot.length > 0) {
       return new Response(JSON.stringify({ success: true, message: "Spam filtered." }), { status: 200 });
     }
 
-    // Input Validation Boundary Check
     if (!name || !email || !query) {
       return new Response(JSON.stringify({ error: "Missing required parameters." }), { status: 400 });
     }
 
-    // Secure Data Transmission Execution
     const { error } = await resend.emails.send({
       from: 'The Logic Pipeline Vault <onboarding@resend.dev>',
       to: ['joosthuizen@gmail.com'], 
