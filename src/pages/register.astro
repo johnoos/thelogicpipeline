@@ -8,53 +8,71 @@ const registrationOpen = true;
   <main class="container py-xl">
     <header class="section-header">
       <a href="/" class="nav-back">← Diagnostics Baseline</a>
-      <h1>Weekly Group Clinic Registration</h1>
+      <h1>Weekly Group Clinic Intake & Queries</h1>
       <p class="summary-text">Synchronized 4-week structured logic validation tracks. October/November 4-student capacity cap applies.</p>
     </header>
 
-    <section class="form-wrapper">
-      {registrationOpen ? (
-        <div class="native-form">
-          <h2>Submit Intake Parameter Check or Query</h2>
-          
-          <p class="form-instruction-text">
-            Please enter your baseline tracking information below to securely deliver your structural parameters directly to our archive:
-          </p>
-          
-          <!-- Unified Data Submission Layout -->
-          <form id="pipeline-intake-form">
-            <!-- Invisible security honeypot field to trap automated malicious scripts -->
-            <input type="text" name="security-token" style="display:none !important;" tabindex="-1" autocomplete="off" />
+    <div class="split-architecture">
+      <!-- Track 1: Ready to Enroll (Google Form) -->
+      <section class="action-card primary-track">
+        <h2>1. Cohort Screening & Enrollment</h2>
+        <p class="track-description">
+          For postgraduate candidates facing imminent thesis deadlines or proposal reviews who are ready to secure an active boardroom slot.
+        </p>
+        <a 
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdJkSNvcZ7LVCscAjXLsbnbsTG7TeKd_OLnPbyKFQsDLKltqA/viewform?usp=header" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="enrollment-action-button"
+        >
+          Open Screening Portal Gate →
+        </a>
+        <span class="prereq-note">Requires explicit commitment to the 15-minute daily task boundaries.</span>
+      </section>
 
-            <div class="form-group">
-              <label for="student-name">Full Name</label>
-              <input type="text" id="student-name" name="student-name" required placeholder="John Smith" class="input-field" />
-            </div>
+      <!-- Track 2: General Thesis Queries (Custom Serverless Form) -->
+      <section class="form-wrapper">
+        <h2>2. Submit General Advisory Query</h2>
+        {registrationOpen ? (
+          <div class="native-form">
+            <p class="form-instruction-text">
+              Have an ambiguous logic block or a specific framework question? Deliver your structural query parameters directly to our archive:
+            </p>
             
-            <div class="form-group">
-              <label for="student-email">Academic/Corporate Email Address</label>
-              <input type="email" id="student-email" name="student-email" required placeholder="name@university.edu" class="input-field" />
-            </div>
+            <form id="pipeline-intake-form">
+              <!-- Invisible security honeypot field to trap automated malicious scripts -->
+              <input type="text" name="security-token" style="display:none !important;" tabindex="-1" autocomplete="off" />
 
-            <div class="form-group">
-              <label for="student-query">Parameter Summary or Query Context</label>
-              <textarea id="student-query" name="student-query" rows="4" required placeholder="Insert your current research phase, block, or raw query details here..." class="input-field"></textarea>
-            </div>
-            
-            <button type="submit" id="submit-btn" class="submit-action-link">
-              Submit Parameters →
-            </button>
-          </form>
+              <div class="form-group">
+                <label for="student-name">Full Name</label>
+                <input type="text" id="student-name" name="student-name" required placeholder="John Smith" class="input-field" />
+              </div>
+              
+              <div class="form-group">
+                <label for="student-email">Academic/Corporate Email Address</label>
+                <input type="email" id="student-email" name="student-email" required placeholder="name@university.edu" class="input-field" />
+              </div>
 
-          <!-- Dynamic, Premium Inline Feedback Containers -->
-          <div id="status-notice" class="ui-notice-box" style="display: none;"></div>
-        </div>
-      ) : (
-        <div class="alert-box">
-          <p>Current synchronization track full. Please arrange an exploratory meeting for future allocations.</p>
-        </div>
-      )}
-    </section>
+              <div class="form-group">
+                <label for="student-query">Parameter Summary or Query Context</label>
+                <textarea id="student-query" name="student-query" rows="4" required placeholder="Insert your current research phase, block, or raw query details here..." class="input-field"></textarea>
+              </div>
+              
+              <button type="submit" id="submit-btn" class="submit-action-link">
+                Submit Parameters →
+              </button>
+            </form>
+
+            <!-- Dynamic, Premium Inline Feedback Containers -->
+            <div id="status-notice" class="ui-notice-box" style="display: none;"></div>
+          </div>
+        ) : (
+          <div class="alert-box">
+            <p>Current synchronization track full. Please arrange an exploratory meeting for future allocations.</p>
+          </div>
+        )}
+      </section>
+    </div>
   </main>
 </Layout>
 
@@ -67,7 +85,6 @@ const registrationOpen = true;
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // 1. Trigger premium processing state visual indicator
       submitBtn.disabled = true;
       submitBtn.textContent = "Transmitting Parameters...";
       noticeBox.style.display = 'none';
@@ -75,26 +92,35 @@ const registrationOpen = true;
       try {
         const formData = new FormData(form);
         
-        // 2. Dispatch data package securely straight into your private serverless endpoint
+        // Construct clean runtime data payload including dynamic non-hardcoded subject line
+        const payload = {
+          'student-name': formData.get('student-name'),
+          'student-email': formData.get('student-email'),
+          'student-query': formData.get('student-query'),
+          'security-token': formData.get('security-token'),
+          'email-subject': `General Advisory Inquiry from ${formData.get('student-name')}`
+        };
+
         const response = await fetch('/api/intake', {
           method: 'POST',
-          body: formData
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
         });
 
         const result = await response.json();
 
         if (response.ok && result.success) {
-          // 3. Absolute Success State UI Switch
           form.style.display = 'none';
           noticeBox.className = "ui-notice-box success-state";
-          noticeBox.innerHTML = `<h3>Transmission Successful ✓</h3><p>Your research parameters have been secured inside our private database zone. Dr Oosthuizen will review your diagnostic profile and contact you within 24 operational hours.</p>`;
+          noticeBox.innerHTML = `<h3>Transmission Successful ✓</h3><p>Your research parameters have been secured inside our private database zone. Dr. Oosthuizen will review your diagnostic profile and contact you within 24 operational hours.</p>`;
           noticeBox.style.display = 'block';
         } else {
           throw new Error(result.error || "Server connection delay.");
         }
 
       } catch (err: any) {
-        // 4. Elegant Failure Fallback Protection
         submitBtn.disabled = false;
         submitBtn.textContent = "Submit Parameters →";
         noticeBox.className = "ui-notice-box error-state";
@@ -112,8 +138,19 @@ const registrationOpen = true;
   .nav-back:hover { color: var(--text-primary); }
   .summary-text { font-size: var(--step-1); color: var(--text-muted); max-width: 60ch; }
   
-  .form-wrapper { background: var(--bg-surface); border: 1px solid var(--border-accent); padding: 2.5rem; border-radius: 4px; max-width: 540px; }
-  .form-wrapper h2 { font-size: var(--step-2); margin-top: 0; margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
+  /* Split Architecture Layout Containers */
+  .split-architecture { display: flex; flex-direction: column; gap: 2.5rem; max-width: 540px; }
+  
+  .action-card { background: var(--bg-surface); border: 1px solid var(--border-accent); padding: 2.5rem; border-radius: 4px; }
+  .primary-track { border-left: 4px solid #127C44; }
+  .action-card h2, .form-wrapper h2 { font-size: var(--step-2); margin-top: 0; margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
+  .track-description { font-size: var(--step-0); color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+  
+  .enrollment-action-button { display: block; width: 100%; text-align: center; font-family: var(--font-sans); font-size: var(--step-0); font-weight: 600; background: #127C44; color: #ffffff; text-decoration: none; padding: 1rem; border-radius: 4px; transition: background 0.2s ease; box-sizing: border-box; }
+  .enrollment-action-button:hover { background: #0d6134; }
+  .prereq-note { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic; }
+
+  .form-wrapper { background: var(--bg-surface); border: 1px solid var(--border-accent); padding: 2.5rem; border-radius: 4px; }
   .form-instruction-text { font-size: var(--step-0); color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6; }
   
   .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -150,7 +187,6 @@ const registrationOpen = true;
     cursor: not-allowed;
   }
 
-  /* Inline Premium Notification Box Layouts */
   .ui-notice-box { padding: 1.5rem; border-radius: 4px; margin-top: 2rem; font-size: var(--step-0); line-height: 1.6; }
   .success-state { background: rgba(18, 124, 68, 0.05); border: 1px solid #127C44; color: var(--text-primary); }
   .success-state h3 { color: #127C44; margin-top: 0; margin-bottom: 0.5rem; font-size: var(--step-1); }
