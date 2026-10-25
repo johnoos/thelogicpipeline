@@ -7,26 +7,14 @@ export default defineConfig({
   publicDir: './public',
   outDir: './dist',
   
-  // Explicitly tell Astro to compile into Cloudflare Serverless Edge Functions
+  // Explicitly compile into Cloudflare Serverless Edge Functions
   output: 'server', 
 
-  // Set your primary deployment subdomain engine path
-  site: 'https://johnoosthuizen.com',
+  // Set your single, absolute primary deployment domain
+  site: 'https://thelogicpipeline.johnoosthuizen.com',
 
   integrations: [
-    sitemap({
-      // Manually injecting your clean best-practice subdomains into the build output index
-      customPages: [
-        'https://cv.johnoosthuizen.com',
-        'https://phdreports.johnoosthuizen.com',
-        'https://theses.johnoosthuizen.com',
-        'https://theses.johnoosthuizen.com/masters',
-        'https://theses.johnoosthuizen.com/honours',
-        'https://transcripts.johnoosthuizen.com',
-        'https://credentials.johnoosthuizen.com',
-        'https://publications.johnoosthuizen.com'
-      ]
-    })
+    sitemap()
   ],
 
   // Configure the Cloudflare adapter to assemble structural routing files natively
