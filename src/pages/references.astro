@@ -33,11 +33,19 @@ const BRAND_ACCENT = "#127C44";
 </div>
 
 <style>
-  /* Paste this into the <style> tags of BOTH files */
+  /* 1. Target the list container directly to strip standard browser styling */
+  .file-list {
+    list-style: none !important;      /* Removes the default native round bullets */
+    list-style-type: none !important; /* Secondary explicit reinforcement */
+    padding: 0;
+    margin: 0;
+  }
+
+  /* 2. Style properties for the text and items */
   .file-link,
   .file-link span,
   .file-name {
-    color: #4a4a4a !important; /* Forces a solid, readable dark grey */
+    color: #888888 !important; /* Shifts text to a mid-tone grey for high contrast against green */
     text-decoration: none;
     font-size: 1.15rem;
     display: inline-flex;
@@ -45,14 +53,16 @@ const BRAND_ACCENT = "#127C44";
     transition: color 0.2s ease;
   }
 
+  /* 3. The manual square marker accent alignment rules */
   .bullet {
-    color: #127C44 !important; /* Keeps the signature hourglass green accent */
+    color: #127C44 !important; /* Preserves your signature green look */
     margin-right: 12px;
     font-weight: bold;
   }
 
+  /* 4. Interactive hover transition rules */
   .file-link:hover,
   .file-link:hover span {
-    color: #127C44 !important; /* Transitions cleanly to green on mouse hover */
+    color: #127C44 !important; /* Snaps dynamically to vibrant green on mouse hover */
   }
 </style>
