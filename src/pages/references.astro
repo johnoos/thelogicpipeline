@@ -33,25 +33,26 @@ const BRAND_ACCENT = "#127C44";
 </div>
 
 <style>
-  /* Keep your existing style properties exactly as you designed them */
-  .file-list {
-    list-style: none;
-    padding: 0;
-  }
-  .file-item {
-    margin-bottom: 12px;
-  }
-  .file-link {
-    color: #e0e0e0;
+  /* Paste this into the <style> tags of BOTH files */
+  .file-link,
+  .file-link span,
+  .file-name {
+    color: #4a4a4a !important; /* Forces a solid, readable dark grey */
     text-decoration: none;
+    font-size: 1.15rem;
     display: inline-flex;
     align-items: center;
+    transition: color 0.2s ease;
   }
-  .file-link:hover {
-    color: #127C44;
-  }
+
   .bullet {
-    color: #127C44;
-    margin-right: 8px;
+    color: #127C44 !important; /* Keeps the signature hourglass green accent */
+    margin-right: 12px;
+    font-weight: bold;
+  }
+
+  .file-link:hover,
+  .file-link:hover span {
+    color: #127C44 !important; /* Transitions cleanly to green on mouse hover */
   }
 </style>

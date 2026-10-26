@@ -65,29 +65,28 @@ const BRAND_ACCENT = "#127C44";
     .file-item {
       margin-bottom: 14px;
     }
-    .file-link {
-        color: #555555 !important; /* Force overrides any global theme properties */
-        text-decoration: none;
-        font-size: 1.15rem;
-        display: inline-flex;
-        align-items: center;
-        transition: color 0.2s ease;
-    }
+    /* Paste this into the <style> tags of BOTH files */
+  .file-link,
+  .file-link span,
+  .file-name {
+    color: #4a4a4a !important; /* Forces a solid, readable dark grey */
+    text-decoration: none;
+    font-size: 1.15rem;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+  }
 
-    /* Explicitly bind the inner text span tag to prevent layout inheritance drops */
-    .file-link span {
-        color: #555555 !important;
-    }
+  .bullet {
+    color: #127C44 !important; /* Keeps the signature hourglass green accent */
+    margin-right: 12px;
+    font-weight: bold;
+  }
 
-    .file-link:hover, 
-    .file-link:hover span   {
-        color: #127C44 !important; /* Preserves signature green pop on hover interaction */
-    }
-    .bullet {
-      color: var(--accent);
-      margin-right: 12px;
-      font-weight: bold;
-    }
+  .file-link:hover,
+  .file-link:hover span {
+    color: #127C44 !important; /* Transitions cleanly to green on mouse hover */
+  }
   </style>
 </head>
 <body>
