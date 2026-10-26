@@ -1,0 +1,103 @@
+---
+// src/pages/vault.astro
+export const prerender = true;
+
+const files = [
+  { name: "Curriculum Vitae", slug: "cv.pdf" },
+  { name: "PhD Dissertation", slug: "phd-dissertation.pdf" },
+  { name: "MMus Thesis", slug: "mmus-thesis.pdf" },
+  { name: "BMusHons Assignment", slug: "bmushons-assignment.pdf" },
+  { name: "Academic Certificates", slug: "certs.pdf" },
+  { name: "Academic Transcripts", slug: "transcripts.pdf" },
+  { name: "PhD Progress Reports", slug: "phdreports.pdf" },
+  { name: "Enterprise Architecture Credentials", slug: "ea-certs.pdf" },
+  { name: "Published Books & Technical Material", slug: "books.pdf" },
+  { name: "Peer-Reviewed Journal Articles", slug: "article.pdf" },
+  { name: "International Exchange Documentation", slug: "intl-exch-student.pdf" },
+  { name: "International Course Profiles", slug: "intl-courses.pdf" }
+];
+
+// Color palette derived strictly from the signature hourglass accent
+const BRAND_ACCENT = "#127C44"; 
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Vault | The Logic Pipeline</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      font-family: 'Times New Roman', Times, serif;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .vault-container {
+      max-width: 650px;
+      width: 100%;
+    }
+    h1 {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #333333;
+      padding-bottom: 12px;
+    }
+    p {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #aaaaaa;
+      margin-bottom: 32px;
+    }
+    .file-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .file-item {
+      margin-bottom: 14px;
+    }
+    .file-link {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.2s ease;
+    }
+    .file-link:hover {
+      color: var(--accent);
+    }
+    .bullet {
+      color: var(--accent);
+      margin-right: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="vault-container" style={`--accent: ${BRAND_ACCENT};`}>
+    <h1>Academic &amp; Professional Credentials</h1>
+    <p>Direct verification repository for postgraduate records, independent evaluations, and technical documentation.</p>
+    
+    <ul class="file-list">
+      {files.map(file => (
+        <li class="file-item">
+          <a class="file-link" href={`/assets/${file.slug}`} target="_blank" rel="noopener noreferrer">
+            <span class="bullet">&#9632;</span>
+            <span>{file.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</body>
+</html>
