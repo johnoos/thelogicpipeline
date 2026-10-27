@@ -4,23 +4,29 @@ export async function onRequest({ request }, next) {
   const url = new URL(request.url);
   const hostname = url.hostname.toLowerCase(); // e.g., "cv.johnoosthuizen.com"
 
-  // Process rules only if it is an incoming document shortcut subdomain
-  if (hostname.includes('.') && !hostname.startsWith('www.') && !hostname.startsWith('thelogicpipeline.')) {
-    
-    // CRITICAL FIX: Extract strictly the FIRST text string element before the first dot
-    const subdomain = hostname.split('.')[0]; // e.g., "cv"
+  // 1. Break the hostname down into a clean array of string components
+  const parts = hostname.split('.'); // ['cv', 'johnoosthuizen', 'com']
 
-    // Scan your central data array for a slug matching this string prefix
-    const matchedFile = vaultFiles.find(file => 
-      file.slug.toLowerCase().startsWith(subdomain)
-    );
+  // 2. We only intercept if there is a distinct subdomain segment present
+  if (parts.length > 2) {
+    const firstSegment = parts[0]; // e.g., "cv" or "transcripts"
 
-    if (matchedFile) {
-      const targetDestination = "https://johnoosthuizen.com" + matchedFile.slug;
-      return Response.redirect(targetDestination, 301);
+    // 3. Skip administrative or core application tracks immediately
+    if (firstSegment !== 'www' && firstSegment !== 'thelogicpipeline') {
+      
+      // 4. Match the extracted segment directly against your file data registry
+      const matchedFile = vaultFiles.find(file => 
+        file.slug.toLowerCase().startsWith(firstSegment)
+      );
+
+      if (matchedFile) {
+        // 5. Force an immediate dynamic redirect out to the asset route parameter
+        const targetDestination = "https://johnoosthuizen.com" + matchedFile.slug;
+        return Response.redirect(targetDestination, 301);
+      }
     }
   }
 
-  // Continue to standard Astro page lifecycle if no shortcut maps out
+  // Fall through gracefully to standard Astro page rendering if no file shortcut matches
   return next();
 }
