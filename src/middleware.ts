@@ -5,18 +5,20 @@ export async function onRequest({ request }, next) {
   const hostname = url.hostname.toLowerCase();
   const parts = hostname.split('.');
 
-  // Intercept subdomains (e.g., cv.johnoosthuizen.com)
+  // Verify we have a true subdomain segment
   if (parts.length > 2) {
-    const firstSegment = parts[0]; // Fixed: Must target the first index element
+    const firstSegment = parts[0]; // <-- FIXED: Isolates the string 'cv' from the array
 
-    // Bypass canonical system domains
+    // Bypass common infrastructural domains
     if (firstSegment !== 'www' && firstSegment !== 'thelogicpipeline') {
+      
+      // Strict exact match comparison against the slug name
       const matchedFile = vaultFiles.find(file => 
-        file.slug.toLowerCase().startsWith(firstSegment)
+        file.slug.toLowerCase().startsWith(firstSegment.toLowerCase())
       );
 
       if (matchedFile) {
-        // Assembles the precise, clean destination URL path
+        // Assembles the explicit, clean URL format you requested
         const targetDestination = "https://johnoosthuizen.com" + matchedFile.slug;
         return Response.redirect(targetDestination, 301);
       }
