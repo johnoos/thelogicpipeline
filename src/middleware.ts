@@ -5,9 +5,9 @@ export async function onRequest({ request }, next) {
   const hostname = url.hostname.toLowerCase();
   const parts = hostname.split('.');
 
-  // Intercept subdomains (e.g., ://johnoosthuizen.com)
+  // Intercept subdomains (e.g., cv.johnoosthuizen.com)
   if (parts.length > 2) {
-    const firstSegment = parts[0];
+    const firstSegment = parts[0]; // Fixed: Must target the first index element
 
     // Bypass canonical system domains
     if (firstSegment !== 'www' && firstSegment !== 'thelogicpipeline') {
