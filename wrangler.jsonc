@@ -1,0 +1,11 @@
+{
+  "name": "thelogicpipeline",
+  // ...keep the generated "main", "compatibility_date", "assets", etc...
+
+  "routes": [
+    { "pattern": "johnoosthuizen.com", "custom_domain": true },
+    { "pattern": "www.johnoosthuizen.com", "custom_domain": true },
+    { "pattern": "thelogicpipeline.johnoosthuizen.com", "custom_domain": true },
+    { "pattern": "*.johnoosthuizen.com/*", "zone_name": "johnoosthuizen.com" }
+  ]
+}

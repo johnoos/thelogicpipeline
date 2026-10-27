@@ -1,28 +1,21 @@
 import { vaultFiles } from './data/vault.js';
 import type { MiddlewareHandler } from 'astro';
 
+const ROOT = 'johnoosthuizen.com';
+const RESERVED = new Set(['www', 'thelogicpipeline']);
+
 export const onRequest: MiddlewareHandler = async ({ request }, next) => {
-  const url = new URL(request.url);
-  const hostname = url.hostname.toLowerCase();
-  const parts = hostname.split('.');
+  const { hostname } = new URL(request.url);
+  const host = hostname.toLowerCase();
 
-  // Intercept subdomains (e.g., ://johnoosthuizen.com)
-  if (parts.length > 2) {
-    const firstSegment = parts[0]; 
-
-    // Bypass canonical system domains
-    if (firstSegment !== 'www' && firstSegment !== 'thelogicpipeline') {
-      const matchedFile = vaultFiles.find(file => 
-        file.slug.toLowerCase().startsWith(firstSegment)
-      );
-
-      if (matchedFile) {
-        // Construct the correct target path with the explicit assets folder
-        const targetDestination = "https://johnoosthuizen.com" + matchedFile.slug;
-        return Response.redirect(targetDestination, 301);
+  if (host.endsWith(`.${ROOT}`)) {
+    const sub = host.slice(0, -(ROOT.length + 1));
+    if (!sub.includes('.') && !RESERVED.has(sub)) {
+      const file = vaultFiles.find(f => f.slug.replace(/\.pdf$/i, '').toLowerCase() === sub);
+      if (file) {
+        return Response.redirect(`https://${ROOT}/assets/${file.slug}`, 302);
       }
     }
   }
-
   return next();
 };

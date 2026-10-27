@@ -7,21 +7,14 @@ export default defineConfig({
   srcDir: './src',
   publicDir: './public',
   outDir: './dist',
-  
-  // Explicitly compile into Cloudflare Serverless Edge Functions
-  output: 'server', 
-
-  // Set your single, absolute primary deployment domain
+  output: 'server',
   site: 'https://thelogicpipeline.johnoosthuizen.com',
 
   integrations: [
     sitemap({
-      customPages: vaultFiles.map(file => `https://johnoosthuizen.com{file.slug}`)
+      customPages: vaultFiles.map(f => `https://johnoosthuizen.com/assets/${f.slug}`)
     })
   ],
 
-  // Configure the Cloudflare adapter to assemble structural routing files natively
-  adapter: cloudflare({
-    mode: 'directory'
-  }),
+  adapter: cloudflare(),
 });
