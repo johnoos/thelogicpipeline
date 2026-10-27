@@ -1,24 +1,23 @@
 import { vaultFiles } from './data/vault.js';
+import type { MiddlewareHandler } from 'astro';
 
-export async function onRequest({ request }, next) {
+export const onRequest: MiddlewareHandler = async ({ request }, next) => {
   const url = new URL(request.url);
   const hostname = url.hostname.toLowerCase();
   const parts = hostname.split('.');
 
-  // Verify we have a true subdomain segment
+  // Intercept subdomains (e.g., ://johnoosthuizen.com)
   if (parts.length > 2) {
-    const firstSegment = parts[0]; // <-- FIXED: Isolates the string 'cv' from the array
+    const firstSegment = parts[0]; 
 
-    // Bypass common infrastructural domains
+    // Bypass canonical system domains
     if (firstSegment !== 'www' && firstSegment !== 'thelogicpipeline') {
-      
-      // Strict exact match comparison against the slug name
       const matchedFile = vaultFiles.find(file => 
-        file.slug.toLowerCase().startsWith(firstSegment.toLowerCase())
+        file.slug.toLowerCase().startsWith(firstSegment)
       );
 
       if (matchedFile) {
-        // Assembles the explicit, clean URL format you requested
+        // Construct the correct target path with the explicit assets folder
         const targetDestination = "https://johnoosthuizen.com" + matchedFile.slug;
         return Response.redirect(targetDestination, 301);
       }
@@ -26,4 +25,4 @@ export async function onRequest({ request }, next) {
   }
 
   return next();
-}
+};
