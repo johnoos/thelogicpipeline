@@ -4,4 +4,4 @@ dist/
 resend.com-api-key.env
 .wrangler/
 *.env
-.env*
+.env*.DS_Store
